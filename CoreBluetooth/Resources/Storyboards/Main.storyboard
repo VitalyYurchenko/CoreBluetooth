@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="YF8-Dg-Eoh">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="CEn-tv-l0Z">
+            <objects>
+                <viewController id="YF8-Dg-Eoh" customClass="VYMainViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Idy-e9-jxD"/>
+                        <viewControllerLayoutGuide type="bottom" id="re0-LS-mVu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Giv-Xg-Y6u">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CoreBluetooth Demo" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="233" translatesAutoresizingMaskIntoConstraints="NO" id="SN1-2S-eFk">
+                                <rect key="frame" x="44" y="242" width="233" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SN1-2S-eFk" secondAttribute="trailing" constant="20" symbolic="YES" id="7UE-gr-Wa8"/>
+                            <constraint firstItem="SN1-2S-eFk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Idy-e9-jxD" secondAttribute="bottom" constant="20" symbolic="YES" id="9XN-zV-StY"/>
+                            <constraint firstAttribute="centerY" secondItem="SN1-2S-eFk" secondAttribute="centerY" id="AcA-m7-0kl"/>
+                            <constraint firstItem="re0-LS-mVu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="SN1-2S-eFk" secondAttribute="bottom" constant="20" symbolic="YES" id="ey9-w3-QGI"/>
+                            <constraint firstAttribute="centerX" secondItem="SN1-2S-eFk" secondAttribute="centerX" id="frI-LB-VGY"/>
+                            <constraint firstItem="SN1-2S-eFk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Giv-Xg-Y6u" secondAttribute="leading" constant="20" symbolic="YES" id="uGB-vD-TCZ"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K6o-c0-LNF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="182" y="94"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
