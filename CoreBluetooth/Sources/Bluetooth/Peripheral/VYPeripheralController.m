@@ -10,10 +10,17 @@
 
 #import "VYConstants.h"
 
+#import "VYMessage.h"
+#import "VYMessageChunk.h"
+
 @interface VYPeripheralController ()
 
-@property (nonatomic) CBMutableService *mainService;
-@property (nonatomic) CBMutableCharacteristic *mainServiceCharacteristic;
+@property (nonatomic) CBMutableService *dataTransferService;
+@property (nonatomic) CBMutableCharacteristic *dataRequestCharacteristic;
+@property (nonatomic) CBMutableCharacteristic *dataResponseCharacteristic;
+
+@property (nonatomic) VYMutableMessage *requestMessage;
+@property (nonatomic) VYMutableMessage *responseMessage;
 
 @end
 
@@ -34,23 +41,6 @@
                                   CBPeripheralManagerOptionRestoreIdentifierKey: @""};
         
         _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:queue options:options];
-        
-        // Initialize a characteristic.
-        CBUUID *characteristicUUID = [CBUUID UUIDWithString:kVYPeripheralMainServiceCharacteristicUUID];
-        CBCharacteristicProperties properties = CBCharacteristicPropertyRead | CBCharacteristicPropertyWrite | CBCharacteristicPropertyNotify;
-        NSData *value = nil;
-        CBAttributePermissions permissions = CBAttributePermissionsReadable | CBAttributePermissionsWriteable;
-        
-        _mainServiceCharacteristic = [[CBMutableCharacteristic alloc] initWithType:characteristicUUID
-                                                                        properties:properties
-                                                                             value:value
-                                                                       permissions:permissions];
-        
-        // Initialize a service.
-        CBUUID *serviceUUID = [CBUUID UUIDWithString:kVYPeripheralMainServiceUUID];
-        
-        _mainService = [[CBMutableService alloc] initWithType:serviceUUID primary:YES];
-        _mainService.characteristics = @[_mainServiceCharacteristic];
     }
 
     return self;
@@ -66,19 +56,12 @@
     switch (peripheral.state)
     {
         case CBPeripheralManagerStateUnknown:
-        {
-            break;
-        }
         case CBPeripheralManagerStateResetting:
-        {
-            break;
-        }
         case CBPeripheralManagerStateUnsupported:
-        {
-            break;
-        }
         case CBPeripheralManagerStateUnauthorized:
         {
+            [self deinitializeServices];
+            
             break;
         }
         case CBPeripheralManagerStatePoweredOff:
@@ -87,7 +70,10 @@
         }
         case CBPeripheralManagerStatePoweredOn:
         {
-            [peripheral addService:self.mainService];
+            if (![self isServicesInitialized] && [self initializeServices])
+            {
+                [peripheral addService:self.dataTransferService];
+            }
             
             break;
         }
@@ -117,7 +103,7 @@
     }
     else
     {
-        if ([service isEqual:self.mainService])
+        if ([service isEqual:self.dataTransferService])
         {
             NSDictionary *advertisementData = @{CBAdvertisementDataLocalNameKey: @"CoreBluetoothPeripheral",
                                                 CBAdvertisementDataServiceUUIDsKey: @[service.UUID]};
@@ -127,36 +113,22 @@
     }
 }
 
-- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didSubscribeToCharacteristic:(CBCharacteristic *)characteristic
-{
-    if ([characteristic.UUID isEqual:self.mainServiceCharacteristic.UUID])
-    {
-        NSData *value = self.mainServiceCharacteristic.value != nil ? self.mainServiceCharacteristic.value : [NSData data];
-        [peripheral updateValue:value forCharacteristic:self.mainServiceCharacteristic onSubscribedCentrals:nil];
-    }
-}
-
-- (void)peripheralManager:(CBPeripheralManager *)peripheral central:(CBCentral *)central didUnsubscribeFromCharacteristic:(CBCharacteristic *)characteristic
-{
-    
-}
-
 - (void)peripheralManager:(CBPeripheralManager *)peripheral didReceiveReadRequest:(CBATTRequest *)request
 {
     NSLog(@"Info: CBPeripheralManager did recieve read request: %@", request);
     
     CBATTError result = CBATTErrorSuccess;
     
-    if ([request.characteristic.UUID isEqual:self.mainServiceCharacteristic.UUID])
+    // Handle data response characteristic read request.
+    if ([request.characteristic.UUID isEqual:self.dataResponseCharacteristic.UUID])
     {
-        if (request.offset >= [self.mainServiceCharacteristic.value length])
+        if (request.offset == 0)
         {
-            result = CBATTErrorInvalidOffset;
+            request.value = [self.responseMessage firstChunk].data;
         }
         else
         {
-            NSRange range = NSMakeRange(request.offset, [self.mainServiceCharacteristic.value length] - request.offset);
-            request.value = [self.mainServiceCharacteristic.value subdataWithRange:range];
+            result = CBATTErrorInvalidOffset;
         }
     }
     
@@ -167,45 +139,99 @@
 {
     NSLog(@"Info: CBPeripheralManager did recieve write requests: %@", requests);
     
-    for (CBATTRequest *request in requests)
+    CBATTRequest *firstRequest = [requests firstObject];
+    CBATTError result = CBATTErrorSuccess;
+    
+    // Handle data request characteristic write request.
+    if ([firstRequest.characteristic.UUID isEqual:self.dataRequestCharacteristic.UUID])
     {
-        if ([request.characteristic.UUID isEqual:self.mainServiceCharacteristic.UUID])
+        NSMutableData *data = nil;
+        
+        for (CBATTRequest *request in requests)
         {
             if (request.offset == 0)
             {
-                self.mainServiceCharacteristic.value = request.value;
-                
-                [peripheral respondToRequest:[requests firstObject] withResult:CBATTErrorSuccess];
-                [peripheral updateValue:self.mainServiceCharacteristic.value forCharacteristic:self.mainServiceCharacteristic onSubscribedCentrals:nil];
+                data = [NSMutableData dataWithData:request.value];
             }
-            else if (request.offset == [self.mainServiceCharacteristic.value length])
+            else if (request.offset == [data length])
             {
-                NSMutableData *mutableValue = [self.mainServiceCharacteristic.value mutableCopy];
-                [mutableValue appendData:request.value];
-                self.mainServiceCharacteristic.value = [mutableValue copy];
-                
-                [peripheral respondToRequest:[requests firstObject] withResult:CBATTErrorSuccess];
-                [peripheral updateValue:self.mainServiceCharacteristic.value forCharacteristic:self.mainServiceCharacteristic onSubscribedCentrals:nil];
+                [data appendData:request.value];
             }
             else
             {
-                [peripheral respondToRequest:[requests firstObject] withResult:CBATTErrorInvalidOffset];
+                data = nil;
+                result = CBATTErrorInvalidOffset;
+                
                 break;
+            }
+        }
+        
+        if (data != nil)
+        {
+            VYMessageChunk *chunk = [VYMessageChunk messageChunkWithData:data];
+            
+            if ([chunk isFirst])
+            {
+                self.requestMessage = [VYMutableMessage messageWithChunk:chunk];
+                self.responseMessage = nil;
+            }
+            else
+            {
+                [self.requestMessage addChunk:chunk];
+            }
+            
+            if ([chunk isLast])
+            {
+                self.responseMessage = [self.requestMessage.data isEqualToData:[kVYSampleText dataUsingEncoding:NSUTF8StringEncoding]]
+                ? [VYMutableMessage messageWithData:[@"Status Code: 200" dataUsingEncoding:NSUTF8StringEncoding]]
+                : [VYMutableMessage messageWithData:[@"Status Code: 400" dataUsingEncoding:NSUTF8StringEncoding]];
+                self.requestMessage = nil;
             }
         }
         else
         {
-            break;
+            self.requestMessage = nil;
+            self.responseMessage = nil;
         }
     }
+    
+    [peripheral respondToRequest:firstRequest withResult:result];
 }
 
-- (void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager *)peripheral
+#pragma mark -
+#pragma mark Working With Services
+
+- (BOOL)initializeServices
 {
-    if ([self.mainServiceCharacteristic isNotifying])
-    {
-        [peripheral updateValue:self.mainServiceCharacteristic.value forCharacteristic:self.mainServiceCharacteristic onSubscribedCentrals:nil];
-    }
+    // Initialize a characteristics.
+    self.dataRequestCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:kVYPeripheralDataRequestCharacteristicUUID]
+                                                                        properties:CBCharacteristicPropertyWrite
+                                                                             value:nil
+                                                                       permissions:CBAttributePermissionsWriteable];
+    self.dataResponseCharacteristic = [[CBMutableCharacteristic alloc] initWithType:[CBUUID UUIDWithString:kVYPeripheralDataResponseCharacteristicUUID]
+                                                                     properties:CBCharacteristicPropertyRead
+                                                                          value:nil
+                                                                    permissions:CBAttributePermissionsReadable];
+    
+    // Initialize a service.
+    CBUUID *serviceUUID = [CBUUID UUIDWithString:kVYPeripheralDataTransferServiceUUID];
+    
+    self.dataTransferService = [[CBMutableService alloc] initWithType:serviceUUID primary:YES];
+    self.dataTransferService.characteristics = @[self.dataResponseCharacteristic, self.dataRequestCharacteristic];
+    
+    return self.dataTransferService != nil;
+}
+
+- (void)deinitializeServices
+{
+    self.dataResponseCharacteristic = nil;
+    self.dataRequestCharacteristic = nil;
+    self.dataTransferService = nil;
+}
+
+- (BOOL)isServicesInitialized
+{
+    return self.dataTransferService != nil;
 }
 
 @end

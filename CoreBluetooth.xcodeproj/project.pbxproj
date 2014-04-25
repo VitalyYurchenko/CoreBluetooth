@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D84D89BF190684C50086C00C /* VYMessageChunk.m in Sources */ = {isa = PBXBuildFile; fileRef = D84D89BE190684C50086C00C /* VYMessageChunk.m */; };
+		D84D89C0190684C50086C00C /* VYMessageChunk.m in Sources */ = {isa = PBXBuildFile; fileRef = D84D89BE190684C50086C00C /* VYMessageChunk.m */; };
+		D84D89E1190A48B50086C00C /* VYCharacteristic.m in Sources */ = {isa = PBXBuildFile; fileRef = D84D89D9190A48B50086C00C /* VYCharacteristic.m */; };
+		D84D89E2190A48B50086C00C /* VYDataTransferService.m in Sources */ = {isa = PBXBuildFile; fileRef = D84D89DC190A48B50086C00C /* VYDataTransferService.m */; };
+		D84D89E3190A48B50086C00C /* VYService.m in Sources */ = {isa = PBXBuildFile; fileRef = D84D89DE190A48B50086C00C /* VYService.m */; };
+		D84D89E4190A48B50086C00C /* VYPeripheral.m in Sources */ = {isa = PBXBuildFile; fileRef = D84D89E0190A48B50086C00C /* VYPeripheral.m */; };
 		D84F298F18FC2F5F00DA4BAE /* VYMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D89FED4318F7D9590092B20A /* VYMainViewController.m */; };
 		D84F299018FC2F5F00DA4BAE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D89FED1518F7D6F20092B20A /* main.m */; };
 		D84F299118FC2F5F00DA4BAE /* VYAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D89FED3E18F7D91B0092B20A /* VYAppDelegate.m */; };
@@ -16,10 +22,12 @@
 		D84F299618FC2F5F00DA4BAE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D89FED0D18F7D6F20092B20A /* UIKit.framework */; };
 		D84F299818FC2F5F00DA4BAE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D89FED3A18F7D91B0092B20A /* Images.xcassets */; };
 		D84F299918FC2F5F00DA4BAE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D89FED4618F7D9D50092B20A /* Main.storyboard */; };
-		D84F29A618FC315E00DA4BAE /* VYCentralController.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F29A518FC315E00DA4BAE /* VYCentralController.m */; };
+		D84F29A618FC315E00DA4BAE /* VYCentralManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F29A518FC315E00DA4BAE /* VYCentralManager.m */; };
 		D84F29A918FC317300DA4BAE /* VYPeripheralController.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F29A818FC317300DA4BAE /* VYPeripheralController.m */; };
 		D84F29AE18FD221600DA4BAE /* VYConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F29AD18FD221600DA4BAE /* VYConstants.m */; };
 		D84F29AF18FD221600DA4BAE /* VYConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F29AD18FD221600DA4BAE /* VYConstants.m */; };
+		D84F29C018FECC9C00DA4BAE /* VYMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F29BF18FECC9C00DA4BAE /* VYMessage.m */; };
+		D84F29C118FECC9C00DA4BAE /* VYMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D84F29BF18FECC9C00DA4BAE /* VYMessage.m */; };
 		D89FED0A18F7D6F20092B20A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D89FED0918F7D6F20092B20A /* Foundation.framework */; };
 		D89FED0C18F7D6F20092B20A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D89FED0B18F7D6F20092B20A /* CoreGraphics.framework */; };
 		D89FED0E18F7D6F20092B20A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D89FED0D18F7D6F20092B20A /* UIKit.framework */; };
@@ -46,14 +54,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D84D89BD190684C50086C00C /* VYMessageChunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VYMessageChunk.h; sourceTree = "<group>"; };
+		D84D89BE190684C50086C00C /* VYMessageChunk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VYMessageChunk.m; sourceTree = "<group>"; };
+		D84D89D8190A48B50086C00C /* VYCharacteristic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VYCharacteristic.h; sourceTree = "<group>"; };
+		D84D89D9190A48B50086C00C /* VYCharacteristic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VYCharacteristic.m; sourceTree = "<group>"; };
+		D84D89DB190A48B50086C00C /* VYDataTransferService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VYDataTransferService.h; sourceTree = "<group>"; };
+		D84D89DC190A48B50086C00C /* VYDataTransferService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VYDataTransferService.m; sourceTree = "<group>"; };
+		D84D89DD190A48B50086C00C /* VYService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VYService.h; sourceTree = "<group>"; };
+		D84D89DE190A48B50086C00C /* VYService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VYService.m; sourceTree = "<group>"; };
+		D84D89DF190A48B50086C00C /* VYPeripheral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VYPeripheral.h; sourceTree = "<group>"; };
+		D84D89E0190A48B50086C00C /* VYPeripheral.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VYPeripheral.m; sourceTree = "<group>"; };
 		D84F299D18FC2F5F00DA4BAE /* CoreBluetoothPeripheral.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreBluetoothPeripheral.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D84F299F18FC300400DA4BAE /* CoreBluetoothPeripheral-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CoreBluetoothPeripheral-Info.plist"; sourceTree = "<group>"; };
-		D84F29A418FC315E00DA4BAE /* VYCentralController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VYCentralController.h; sourceTree = "<group>"; };
-		D84F29A518FC315E00DA4BAE /* VYCentralController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VYCentralController.m; sourceTree = "<group>"; };
+		D84F29A418FC315E00DA4BAE /* VYCentralManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VYCentralManager.h; sourceTree = "<group>"; };
+		D84F29A518FC315E00DA4BAE /* VYCentralManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VYCentralManager.m; sourceTree = "<group>"; };
 		D84F29A718FC317300DA4BAE /* VYPeripheralController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VYPeripheralController.h; sourceTree = "<group>"; };
 		D84F29A818FC317300DA4BAE /* VYPeripheralController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VYPeripheralController.m; sourceTree = "<group>"; };
 		D84F29AC18FD221600DA4BAE /* VYConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VYConstants.h; sourceTree = "<group>"; };
 		D84F29AD18FD221600DA4BAE /* VYConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VYConstants.m; sourceTree = "<group>"; };
+		D84F29BE18FECC9C00DA4BAE /* VYMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VYMessage.h; sourceTree = "<group>"; };
+		D84F29BF18FECC9C00DA4BAE /* VYMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VYMessage.m; sourceTree = "<group>"; };
 		D89FED0618F7D6F20092B20A /* CoreBluetoothCentral.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreBluetoothCentral.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D89FED0918F7D6F20092B20A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D89FED0B18F7D6F20092B20A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -110,6 +130,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D84D89D6190A48B50086C00C /* Peripheral */ = {
+			isa = PBXGroup;
+			children = (
+				D84D89D7190A48B50086C00C /* Characteristics */,
+				D84D89DA190A48B50086C00C /* Services */,
+				D84D89DF190A48B50086C00C /* VYPeripheral.h */,
+				D84D89E0190A48B50086C00C /* VYPeripheral.m */,
+			);
+			path = Peripheral;
+			sourceTree = "<group>";
+		};
+		D84D89D7190A48B50086C00C /* Characteristics */ = {
+			isa = PBXGroup;
+			children = (
+				D84D89D8190A48B50086C00C /* VYCharacteristic.h */,
+				D84D89D9190A48B50086C00C /* VYCharacteristic.m */,
+			);
+			path = Characteristics;
+			sourceTree = "<group>";
+		};
+		D84D89DA190A48B50086C00C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D84D89DB190A48B50086C00C /* VYDataTransferService.h */,
+				D84D89DC190A48B50086C00C /* VYDataTransferService.m */,
+				D84D89DD190A48B50086C00C /* VYService.h */,
+				D84D89DE190A48B50086C00C /* VYService.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		D84F29A118FC310100DA4BAE /* Bluetooth */ = {
 			isa = PBXGroup;
 			children = (
@@ -123,8 +174,9 @@
 		D84F29A218FC310100DA4BAE /* Central */ = {
 			isa = PBXGroup;
 			children = (
-				D84F29A418FC315E00DA4BAE /* VYCentralController.h */,
-				D84F29A518FC315E00DA4BAE /* VYCentralController.m */,
+				D84D89D6190A48B50086C00C /* Peripheral */,
+				D84F29A418FC315E00DA4BAE /* VYCentralManager.h */,
+				D84F29A518FC315E00DA4BAE /* VYCentralManager.m */,
 			);
 			path = Central;
 			sourceTree = "<group>";
@@ -143,6 +195,10 @@
 			children = (
 				D84F29AC18FD221600DA4BAE /* VYConstants.h */,
 				D84F29AD18FD221600DA4BAE /* VYConstants.m */,
+				D84F29BE18FECC9C00DA4BAE /* VYMessage.h */,
+				D84F29BF18FECC9C00DA4BAE /* VYMessage.m */,
+				D84D89BD190684C50086C00C /* VYMessageChunk.h */,
+				D84D89BE190684C50086C00C /* VYMessageChunk.m */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -413,7 +469,9 @@
 			files = (
 				D84F298F18FC2F5F00DA4BAE /* VYMainViewController.m in Sources */,
 				D84F299018FC2F5F00DA4BAE /* main.m in Sources */,
+				D84F29C118FECC9C00DA4BAE /* VYMessage.m in Sources */,
 				D84F29AF18FD221600DA4BAE /* VYConstants.m in Sources */,
+				D84D89C0190684C50086C00C /* VYMessageChunk.m in Sources */,
 				D84F29A918FC317300DA4BAE /* VYPeripheralController.m in Sources */,
 				D84F299118FC2F5F00DA4BAE /* VYAppDelegate.m in Sources */,
 			);
@@ -423,11 +481,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D84F29A618FC315E00DA4BAE /* VYCentralController.m in Sources */,
+				D84D89BF190684C50086C00C /* VYMessageChunk.m in Sources */,
+				D84F29A618FC315E00DA4BAE /* VYCentralManager.m in Sources */,
+				D84D89E2190A48B50086C00C /* VYDataTransferService.m in Sources */,
 				D89FED4418F7D9590092B20A /* VYMainViewController.m in Sources */,
 				D84F29AE18FD221600DA4BAE /* VYConstants.m in Sources */,
 				D89FED1618F7D6F20092B20A /* main.m in Sources */,
+				D84D89E3190A48B50086C00C /* VYService.m in Sources */,
+				D84F29C018FECC9C00DA4BAE /* VYMessage.m in Sources */,
+				D84D89E1190A48B50086C00C /* VYCharacteristic.m in Sources */,
 				D89FED4018F7D91B0092B20A /* VYAppDelegate.m in Sources */,
+				D84D89E4190A48B50086C00C /* VYPeripheral.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

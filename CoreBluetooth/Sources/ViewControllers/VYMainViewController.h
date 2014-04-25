@@ -10,4 +10,6 @@
 
 @interface VYMainViewController : UIViewController
 
+- (IBAction)action:(id)sender;
+
 @end

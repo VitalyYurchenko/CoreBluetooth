@@ -8,7 +8,8 @@
 
 @import Foundation;
 
-extern NSString * const kVYPeripheralMainServiceUUID;
-extern NSString * const kVYPeripheralMainServiceCharacteristicUUID;
+extern NSString * const kVYPeripheralDataTransferServiceUUID;
+extern NSString * const kVYPeripheralDataRequestCharacteristicUUID;
+extern NSString * const kVYPeripheralDataResponseCharacteristicUUID;
 
-extern NSString * const kVYEOM;
+extern NSString * const kVYSampleText;
